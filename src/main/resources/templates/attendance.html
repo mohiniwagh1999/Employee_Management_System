@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<meta charset="UTF-8">
+<title>Attendance</title>
+
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+</head>
+
+<body>
+ <!-- Header -->
+    <div th:replace="header :: body"></div>
+<div class="container mt-5">
+
+    <h3 class="text-center mb-4">Mark Your Attendance</h3>
+
+    <div class="card p-4 text-center shadow">
+
+       
+
+        <div class="d-flex justify-content-center gap-4">
+
+            <form th:action="@{/checkin}" method="post">
+                <button type="submit" class="btn btn-success px-4">
+                    Check In
+                </button>
+            </form>
+
+            <form th:action="@{/checkout}" method="post">
+                <button type="submit" class="btn btn-danger px-4">
+                    Check Out
+                </button>
+            </form>
+
+        </div>
+
+<hr>
+
+<h5 class="mb-3">Attendance History</h5>
+
+<table class="table table-bordered table-striped">
+
+<thead class="table-success">
+
+<tr>
+<th>ID</th>
+<th>Date</th>
+<th>Check In</th>
+<th>Check Out</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr th:each="att : ${attendanceList}">
+
+<td th:text="${att.id}"></td>
+
+<td th:text="${att.date}"></td>
+
+<td th:text="${att.checkIn}"></td>
+
+<td th:text="${att.checkOut}"></td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+    </div>
+
+</div>
+  
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+ 
+</body>
+</html>

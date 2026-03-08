@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Home - Employee Management</title>
+
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<style>
+
+html,body{
+    height:100%;
+    margin:0;
+}
+
+/* Page layout */
+.page-wrapper{
+    display:flex;
+    flex-direction:column;
+    height:100vh;
+}
+
+/* Hero section fills remaining space */
+.hero-section{
+    flex:1;
+    background:url('/emr/img/officeimg.jpeg') center/cover no-repeat;
+    position:relative;
+}
+
+/* Dark overlay */
+.hero-overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.35);
+}
+
+/* Welcome text */
+.welcome-text{
+    position:absolute;
+    top:35%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    color:white;
+    text-align:center;
+}
+
+.welcome-text h2{
+    font-size:45px;
+    font-weight:600;
+    letter-spacing:1px;
+}
+
+</style>
+</head>
+
+<body>
+
+
+<div class="page-wrapper">
+
+    <!-- Header -->
+    <div th:replace="header :: body"></div>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+
+        <div class="hero-overlay"></div>
+
+       <!--  <div class="welcome-text">
+            <h2>Employee Management System</h2>
+        </div> -->
+        
+        <div class="text-center mt-4">
+
+
+</div>
+
+    </div>
+
+    <!-- Footer -->
+    <div th:replace="footer :: body"></div>
+
+</div>
+
+
+</body>
+</html>

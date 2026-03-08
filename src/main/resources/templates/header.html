@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<meta charset="UTF-8">
+<title>Header</title>
+
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<style>
+.navbar-custom {
+	background: linear-gradient(90deg, #141e30, #243b55);
+	padding: 12px 25px;
+}
+
+.navbar-brand {
+	color: white !important;
+	font-size: 22px;
+	font-weight: bold;
+}
+
+.nav-link {
+	color: white !important;
+	font-weight: 500;
+	margin-right: 15px;
+}
+
+.nav-link:hover {
+	color: #ffd369 !important;
+}
+
+.datetime {
+	color: white;
+	font-size: 14px;
+	margin-right: 20px;
+}
+
+.profile-img {
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+}
+</style>
+
+
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary py-2">
+		<div class="container-fluid">
+
+			<!-- Title -->
+
+
+			<div class="container-fluid position-relative">
+
+				<!-- Center Title -->
+				<a
+					class="navbar-brand position-absolute start-50 translate-middle-x"
+					th:href="@{/home}"> <i class="bi bi-building"></i> Employee
+					Management System
+				</a>
+				<!-- Date Time -->
+				<li class="nav-item me-3 text-white small" id="datetime"></li>
+
+				<!-- Toggle Button -->
+				<button class="navbar-toggler" type="button"
+					data-bs-toggle="collapse" data-bs-target="#navbarContent">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<!-- Navbar Content -->
+				<div class="collapse navbar-collapse justify-content-end"
+					id="navbarContent">
+
+					<ul class="navbar-nav align-items-center">
+
+						<!-- Admin -->
+						<li class="nav-item me-3"><a class="nav-link"
+							th:href="@{/admin}">Admin</a></li>
+
+						<!-- Employee -->
+						<li class="nav-item dropdown me-3"><a
+							class="nav-link dropdown-toggle" href="#" id="employeeDropdown"
+							role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								Employee </a>
+
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" th:href="@{/employees}">Employee
+										List</a></li>
+								<li><a class="dropdown-item" th:href="@{/employees/new}">Add
+										Employee</a></li>
+								<li><a class="dropdown-item"
+									th:href="@{/leaves/apply/{id}(id=${session.loginUserId})}">
+										Apply Leave </a></li>
+										
+										<li><a class="dropdown-item"
+									th:href="@{/attendance}">
+										Attendance </a></li>
+										
+							</ul></li>
+
+
+
+						<!-- Welcome Message -->
+						<li class="nav-item me-3 text-white fw-semibold">Welcome, <span
+							th:text="${session.loginUser}">User</span>
+						</li>
+
+						<!-- Profile Icon -->
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle p-0" href="#"
+							data-bs-toggle="dropdown"> <img
+								src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+								style="width: 26px; height: 26px; border-radius: 50%;">
+						</a>
+
+							<ul class="dropdown-menu dropdown-menu-end">
+								<li><a class="dropdown-item"
+									th:href="@{/employees/profile/{id}(id=${session.loginUserId})}">
+										Profile </a></li>
+								<li><a class="dropdown-item text-danger"
+									th:href="@{/logout}">Logout</a></li>
+							</ul></li>
+
+					</ul>
+
+				</div>
+			</div>
+	</nav>
+
+	<script>
+
+function updateDateTime(){
+
+const now = new Date();
+
+const date = now.toLocaleDateString('en-IN',{
+weekday:'short',
+year:'numeric',
+month:'short',
+day:'numeric'
+});
+
+const time = now.toLocaleTimeString();
+
+document.getElementById("datetime").innerHTML = date + " | " + time;
+
+}
+
+setInterval(updateDateTime,1000);
+
+updateDateTime();
+
+</script>
+
+</body>
+
+</html>
+
+
+
+💼 Problem Statement
+In many organizations, attendance tracking and leave approvals are either manual or poorly managed. This project solves that problem by building a secure, automated system that manages:
+Employee attendance records
+Leave application workflow
+Role-based system access
+Administrative control panel
+
+
+🏗 Architecture & Design
+This project follows proper MVC architecture:
+📦 Controller Layer – Handles HTTP requests
+📦 Service Layer – Business logic implementation
+📦 Repository Layer – Database interaction (JPA/Hibernate)
+📦 Entity Layer – Database mapping
+📦 Security Configuration – Authentication & Authorization
+
+🔐 Security Implementation (Core Strength of This Project)
+One of the major highlights of this project is Spring Security integration:
+✔ Role-Based Authentication (ADMIN / MANAGER / EMPLOYEE)
+ ✔ BCrypt password encryption
+ ✔ Login & Logout handling
+ ✔ URL-level access control
+ ✔ CSRF protection
+ ✔ 403 Forbidden error handling
+
+🕒 Attendance Management System
+Punch In / Punch Out functionality
+Daily attendance recording
+Database storage of time logs
+Status tracking for each employee
+
+📝 Leave Management Workflow
+Employees can apply for leave
+Managers can approve/reject leave
+Leave status updates dynamically
+Full leave history tracking
+
+📊 Admin Dashboard Capabilities
+View all employees
+Manage roles
+Monitor attendance records
+View leave reports
+Full system-level control
+
+🛠 Technology Stack
+Backend: Java + Spring Boot
+ Security: Spring Security
+ Database: MySQL
+ ORM: JPA / Hibernate
+ Frontend: Thymeleaf + Bootstrap
+ Build Tool: Maven
+
+
+

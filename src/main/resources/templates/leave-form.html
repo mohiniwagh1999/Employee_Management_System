@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Apply Leave</title>
+    
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body class="bg-light">
+<div th:replace="header :: body"></div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white">
+                    <h4 class="mb-0"
+                        th:text="${leaveRequest.id} == null ? 'Apply Leave' : 'Edit Leave'">Apply Leave</h4>
+                    <small class="text-muted" th:text="${employee.firstName + ' ' + employee.lastName}">Employee Name</small>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/leaves/apply}" th:object="${leaveRequest}" method="post">
+                        <input type="hidden" th:field="*{id}"/>
+                        <input type="hidden" name="employeeId" th:value="${employee.id}"/>
+
+                        <div class="mb-3">
+                            <label for="type" class="form-label">Leave Type</label>
+                            <select class="form-select" id="type" th:field="*{type}" required>
+                                <option value="" disabled selected>Select type</option>
+                                <option value="SICK">Sick Leave</option>
+                                <option value="CASUAL">Casual Leave</option>
+                                <option value="VACATION">Vacation Leave</option>
+                                <option value="UNPAID">Unpaid Leave</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="startDate" class="form-label">Start Date</label>
+                            <input type="date" class="form-control" id="startDate" th:field="*{startDate}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="endDate" class="form-label">End Date</label>
+                            <input type="date" class="form-control" id="endDate" th:field="*{endDate}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="reason" class="form-label">Reason</label>
+                            <textarea class="form-control" id="reason" rows="3" th:field="*{reason}"
+                                      placeholder="Describe the reason for leave"></textarea>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a class="btn btn-outline-secondary"
+                               th:href="@{'/leaves/employee/' + ${employee.id}}">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Submit Request</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
+

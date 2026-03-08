@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Leaves</title>
+   
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body class="bg-light">
+<div th:replace="header :: body"></div>
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h2 class="mb-0">Leave Requests</h2>
+            <small class="text-muted" th:text="${employee.firstName + ' ' + employee.lastName}">Employee Name</small>
+        </div>
+        <div class="d-flex gap-2">
+            <a class="btn btn-success" th:href="@{'/leaves/apply/' + ${employee.id}}">Apply Leave</a>
+            <a class="btn btn-outline-secondary" th:href="@{'/leaves/calendar/' + ${employee.id}}">Calendar View</a>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-striped mb-0">
+                    <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Type</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Status</th>
+                        <th>Applied On</th>
+                        <th>Reason</th>
+                        <th>Manager Comment</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="leave : ${leaves}">
+                        <td th:text="${leave.id}">1</td>
+                        <td th:text="${leave.type}">SICK</td>
+                        <td th:text="${leave.startDate}">2024-01-01</td>
+                        <td th:text="${leave.endDate}">2024-01-02</td>
+                        <td>
+                            <span th:text="${leave.status}"
+                                  th:classappend="${leave.status == 'APPROVED'} ? ' badge bg-success' : (${leave.status == 'REJECTED'} ? ' badge bg-danger' : ' badge bg-warning text-dark')">
+                                PENDING
+                            </span>
+                        </td>
+                        <td th:text="${leave.appliedOn}">2024-01-01</td>
+                        <td th:text="${leave.reason}">Reason text</td>
+                        <td th:text="${leave.managerComment}">Manager comment</td>
+                        <td>
+                            <div th:if="${leave.status == 'PENDING'}" class="d-flex flex-column gap-1">
+                                <div class="d-flex flex-wrap gap-1">
+                                    <a class="btn btn-sm btn-outline-primary"
+                                       th:href="@{'/leaves/edit/' + ${leave.id}}">Edit</a>
+                                    <a class="btn btn-sm btn-outline-secondary"
+                                       th:href="@{'/leaves/cancel/' + ${leave.id}}"
+                                       onclick="return confirm('Cancel this leave request?');">Cancel</a>
+                                </div>
+                                <form th:action="@{/leaves/review}" method="post"
+                                      class="d-flex flex-column flex-sm-row gap-1 align-items-stretch">
+                                    <input type="hidden" name="leaveId" th:value="${leave.id}"/>
+                                    <input type="text" class="form-control form-control-sm"
+                                           name="managerComment"
+                                           placeholder="Manager comment">
+                                    <div class="btn-group mt-1 mt-sm-0">
+                                        <button type="submit" name="action" value="approve"
+                                                class="btn btn-sm btn-success">Approve</button>
+                                        <button type="submit" name="action" value="reject"
+                                                class="btn btn-sm btn-danger">Reject</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div th:if="${leave.status != 'PENDING'}" class="text-muted small">
+                                No actions available
+                            </div>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(leaves)}">
+                        <td colspan="9" class="text-center py-3">
+                            No leave requests yet. Click "Apply Leave" to submit one.
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a class="btn btn-outline-secondary" th:href="@{/employees}">Back to Employees</a>
+    </div>
+</div>
+
+
+</body>
+</html>
+
