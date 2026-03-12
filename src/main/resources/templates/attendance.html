@@ -49,6 +49,7 @@
 <th>Date</th>
 <th>Check In</th>
 <th>Check Out</th>
+<th>Working Hours</th>
 </tr>
 
 </thead>
@@ -64,6 +65,11 @@
 <td th:text="${att.checkIn}"></td>
 
 <td th:text="${att.checkOut}"></td>
+<td th:text="${#temporals.hour(att.checkOut) - #temporals.hour(att.checkIn)} 
+             + ' hrs ' + 
+             (${#temporals.minute(att.checkOut) - #temporals.minute(att.checkIn)}) 
+             + ' mins'">
+</td>
 
 </tr>
 
