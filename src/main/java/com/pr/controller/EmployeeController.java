@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pr.entity.Employee;
+import com.pr.repository.EmployeeRepository;
 import com.pr.service.impl.EmployeeService;
 
 @Controller
@@ -29,6 +31,9 @@ public class EmployeeController {
 
 	@Autowired
 	private  EmployeeService employeeService;
+	
+	@Autowired
+	private  EmployeeRepository employeeRepo;
 
 	@Value("${employee.profile.images-dir}")
 	private String imagesDir;
@@ -51,10 +56,26 @@ public class EmployeeController {
 		return "employee-form";
 	}
 
+	@DeleteMapping("/delete/{id}")
+	public String DeleteEmp(@PathVariable Long id,Model model)
+	{
+		Employee employee=employeeRepo.findById(id)
+	.orElseThrow(() -> new RuntimeException("employee not present") );
+		
+		if(employee.getId()!=null)
+		{
+			employeeRepo.deleteById(id);
+		}
+		model.addAttribute("smsg","emploee deleted successfully");
+		return "employee-form";
+		
+		
+	}
+	
 	@GetMapping("/edit/{id}")
 	public String showEditForm(@PathVariable Long id, Model model) {
 		Employee employee = employeeService.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid employee Id: " + id));
+	.orElseThrow(() -> new IllegalArgumentException("Invalid employee Id: " + id));
 		model.addAttribute("employee", employee);
 		return "employee-form";
 	}

@@ -81,9 +81,26 @@
 					<ul class="navbar-nav align-items-center">
 
 						<!-- Admin -->
-						<li class="nav-item me-3"><a class="nav-link"
-							th:href="@{/admin}">Admin</a></li>
+						
+ 
+ <li class="nav-item dropdown me-3"><a
+							class="nav-link dropdown-toggle" href="#" id="employeeDropdown"
+							role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								Admin </a>
 
+							<ul class="dropdown-menu">
+								
+								<li><a class="dropdown-item" th:href="@{/employees/new}">Add
+										Employee</a></li>
+								
+									<li><a class="dropdown-item" th:href="@{/employees}">Delete
+										Employee</a></li>		
+									
+										
+							</ul></li>
+
+ 
+ 
 						<!-- Employee -->
 						<li class="nav-item dropdown me-3"><a
 							class="nav-link dropdown-toggle" href="#" id="employeeDropdown"
@@ -93,8 +110,7 @@
 							<ul class="dropdown-menu">
 								<li><a class="dropdown-item" th:href="@{/employees}">Employee
 										List</a></li>
-								<li><a class="dropdown-item" th:href="@{/employees/new}">Add
-										Employee</a></li>
+								
 								<li><a class="dropdown-item"
 									th:href="@{/leaves/apply/{id}(id=${session.loginUserId})}">
 										Apply Leave </a></li>

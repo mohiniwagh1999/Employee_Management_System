@@ -19,6 +19,8 @@
                     <h4 class="mb-0" th:text="${employee.id} == null ? 'Add Employee' : 'Edit Employee'">Employee</h4>
                 </div>
                 <div class="card-body">
+                
+              
                     <form th:action="@{/employees/save}" th:object="${employee}" method="post" enctype="multipart/form-data">
                         <input type="hidden" th:field="*{id}"/>
                         <input type="hidden" th:field="*{profileImagePath}"/>
@@ -36,6 +38,11 @@
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control" id="email" th:field="*{email}" required>
+                        </div>
+                        
+                         <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" th:field="*{password}" required>
                         </div>
 
                         <div class="mb-3">
